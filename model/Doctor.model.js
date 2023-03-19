@@ -1,5 +1,5 @@
 const { sequelize } = require("../config/db");
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 
 const Doctor = sequelize.define('doctor', {
   doctorId: {
@@ -32,7 +32,7 @@ const Doctor = sequelize.define('doctor', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  experience: {
+  experience: { 
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -43,7 +43,16 @@ const Doctor = sequelize.define('doctor', {
   rating: {
     type: Sequelize.FLOAT,
     allowNull: true
-  }
+  },
+  fees:{
+type:DataTypes.BIGINT,
+allowNull:false
+  },
+  password:{
+    type:Sequelize.STRING,
+    allowNull:false
+      }
+
 });
 
 module.exports = Doctor;

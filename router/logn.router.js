@@ -34,7 +34,6 @@ LoginRouter.post('/', (req, res) => {
                         email: user.email,
                         role:user.role
                     };
-
                     const secret = process.env.JWT_SECRET;
                     const refreshTokenSecret = process.env.JWT_REFRESH_SECRET;
                     const options = { expiresIn: '1d' };
@@ -43,7 +42,7 @@ LoginRouter.post('/', (req, res) => {
                     const refreshToken = jwt.sign(payload, refreshTokenSecret, ReOptions);
 
                     const token = jwt.sign(payload, secret, options);
-                    res.json({ message: 'Success', token, refreshToken });
+                    res.json({ message: 'Success', token, refreshToken,name:user.first_name,email:user.email,last_name:user.last_name });
                 })
                 .catch(err => {
                     throw new Error(err);

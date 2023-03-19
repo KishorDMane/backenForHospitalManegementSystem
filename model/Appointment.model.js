@@ -1,8 +1,5 @@
 const { sequelize } = require("../config/db")
 const { Sequelize } = require('sequelize'); 
-
-
-
 const Appointment = sequelize.define('Appointment', {
   AppointmentId: {
     type: Sequelize.INTEGER,

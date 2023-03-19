@@ -4,7 +4,8 @@ const Doctor = require('../model/Doctor.model');
 const {verifyJWT}=require("../Middlewares/authentication.middelwere")
 const {authorize}=require("../Middlewares/RoleBasedAuthorisation")
 // Get all doctors
-DoctorRouter.get('/',verifyJWT, async (req, res) => {
+
+DoctorRouter.get('/', async (req, res) => {
     try {
         const doctors = await Doctor.findAll();
         res.json(doctors);
@@ -13,8 +14,7 @@ DoctorRouter.get('/',verifyJWT, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
-
-DoctorRouter.get('/Department/:id',verifyJWT, async (req, res) => {
+DoctorRouter.get('/Department/:id', async (req, res) => {
     console.log(req.params.id)
     try {
        newDoctor=await Doctor.findAll({
@@ -36,6 +36,40 @@ DoctorRouter.get('/Department/:id',verifyJWT, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+
+// thi route will match email and password , and if both matches , it will return the 
+// info of that doctor
+DoctorRouter.post('/getdocotorwithpassword', async (req, res) => {
+    let {email,password}=req.body.data;
+    console.log(req.params.id)
+    try {
+       newDoctor=await Doctor.findAll({
+            where: {
+                email:email,
+                password:password
+            }
+          })
+          .then((newDoctor) => {
+            res.json(newDoctor);
+
+            console.log(newDoctor);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+          
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+
+
+
+
 
 DoctorRouter.get('/:email',verifyJWT, async (req, res) => {
     console.log(req.params.id)

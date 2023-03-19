@@ -2,6 +2,7 @@ const express = require('express');
 const DepartmentRouter = express.Router();
 const Department = require('../model/department.model');
 
+
 // Get all departments
 DepartmentRouter.get('/', async (req, res) => {
     try {
@@ -11,6 +12,7 @@ DepartmentRouter.get('/', async (req, res) => {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
     }
+    
 });
 
 // Get department by ID

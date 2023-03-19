@@ -12,7 +12,7 @@ Appointment.belongsTo(Doctor, { foreignKey: 'doctorId' });
 Appointment.belongsTo(Patient, { foreignKey: 'patientId' });
 
 // Get all appointments
-AppointmentRouter.get('/',verifyJWT, async (req, res) => {
+AppointmentRouter.get('/', async (req, res) => {
     try {
         const appointments = await Appointment.findAll({
 
@@ -42,7 +42,7 @@ AppointmentRouter.get('/:id',verifyJWT, async (req, res) => {
 });
 
 // Get appointments by doctor ID
-AppointmentRouter.get('/doctor/:id',verifyJWT, async (req, res) => {
+AppointmentRouter.get('/doctor/:id', async (req, res) => {
     const doctorId = req.params.id;
     try {
         const appointments = await Appointment.findAll({
@@ -73,8 +73,13 @@ AppointmentRouter.get('/patient/:id',verifyJWT, async (req, res) => {
 
 
 // Create a new appointment
-AppointmentRouter.post('/',verifyJWT, async (req, res) => {
-    const { dateTime, patientName, doctorId,PaymentStatus,doctorName, patientId, note } = req.body;
+AppointmentRouter.post('/', async (req, res) => {
+ console.log(req.body)
+    const { dateTime, patientName, doctorId,PaymentStatus,doctorName, patientId, note } = req.body.data;
+    Doctor.update(
+        { availability:false },
+        { where: { doctorId:doctorId } }
+      )
     try {
         const appointment = await Appointment.create({
             dateTime,
@@ -85,7 +90,8 @@ AppointmentRouter.post('/',verifyJWT, async (req, res) => {
             PaymentStatus,
             note,
         });
-        res.json(appointment);
+        
+        res.json({message:"saved successfully",appointment});
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -116,7 +122,7 @@ AppointmentRouter.put('/:id',verifyJWT, async (req, res) => {
 });
 
 // Delete an appointment
-AppointmentRouter.delete('/:id',verifyJWT, async (req, res) => {
+AppointmentRouter.delete('/:id', async (req, res) => {
     try {
         const appointment = await Appointment.findByPk(req.params.id);
         if (!appointment) {

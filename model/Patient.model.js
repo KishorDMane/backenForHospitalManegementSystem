@@ -16,7 +16,7 @@ const Patient = sequelize.define('Patient', {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true,
+
   },
   phone: {
     type: Sequelize.STRING,
@@ -32,7 +32,7 @@ const Patient = sequelize.define('Patient', {
   },
   dob: {
     type: Sequelize.DATEONLY,
-    allowNull: false,
+    allowNull: true,
   },
 });
 
