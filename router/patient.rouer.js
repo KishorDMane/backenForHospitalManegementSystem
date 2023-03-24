@@ -53,16 +53,17 @@ PatientRouter.get('/:patientId',verifyJWT, async (req, res) => {
 
 // POST a new patient
 PatientRouter.post('/', async (req, res) => {
-    const { name, email, phone,  city, country } = req.body.body;
-    console.log(req.body)
-    console.log(name, email, phone,  city, country)
     try {
+        const { name, email, phone,  city, country ,dob} = req.body;
+        // console.log(req.body)
+        // console.log(name, email, phone,  city, country)
         const patient = await Patient.create({
             name,
             email,
             phone,
             city,
-            country
+            country,
+            dob
         });
         res.json(patient);
     } catch (err) {

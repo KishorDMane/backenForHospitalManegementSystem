@@ -116,7 +116,7 @@ DoctorRouter.post('/',verifyJWT, async (req, res) => {
         res.status(201).json(doctor);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error in doctor' });
     }
 });
 

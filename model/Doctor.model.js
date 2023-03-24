@@ -32,7 +32,7 @@ const Doctor = sequelize.define('doctor', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  experience: { 
+  experience: {
     type: Sequelize.STRING,
     allowNull: false
   },

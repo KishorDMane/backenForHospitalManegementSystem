@@ -43,8 +43,8 @@ AppointmentRouter.get('/:id',verifyJWT, async (req, res) => {
 
 // Get appointments by doctor ID
 AppointmentRouter.get('/doctor/:id', async (req, res) => {
-    const doctorId = req.params.id;
     try {
+        const doctorId = req.params.id;
         const appointments = await Appointment.findAll({
             where: { doctorId },
             include: [{ model: Doctor }, { model: Patient }],
@@ -58,8 +58,8 @@ AppointmentRouter.get('/doctor/:id', async (req, res) => {
 
 // Get appointments by patient ID
 AppointmentRouter.get('/patient/:id',verifyJWT, async (req, res) => {
-    const patientId = req.params.id;
     try {
+        const patientId = req.params.id;
         const appointments = await Appointment.findAll({
             where: { patientId },
             include: [{ model: Doctor }, { model: Patient }],
@@ -74,13 +74,13 @@ AppointmentRouter.get('/patient/:id',verifyJWT, async (req, res) => {
 
 // Create a new appointment
 AppointmentRouter.post('/', async (req, res) => {
- console.log(req.body)
-    const { dateTime, patientName, doctorId,PaymentStatus,doctorName, patientId, note } = req.body.data;
-    Doctor.update(
-        { availability:false },
-        { where: { doctorId:doctorId } }
-      )
-    try {
+
+ try {
+        const { dateTime, patientName, doctorId,PaymentStatus,doctorName, patientId, note } = req.body.data;
+        Doctor.update(
+            { availability:false },
+            { where: { doctorId:doctorId } }
+          )
         const appointment = await Appointment.create({
             dateTime,
             patientName,
@@ -94,14 +94,14 @@ AppointmentRouter.post('/', async (req, res) => {
         res.json({message:"saved successfully",appointment});
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send({"err":err.message});
     }
 });
 
 // Update an appointment
 AppointmentRouter.put('/:id',verifyJWT, async (req, res) => {
-    const { dateTime, patientName, doctorId, note,PaymentStatus } = req.body;
     try {
+        const { dateTime, patientName, doctorId, note,PaymentStatus } = req.body;
         const appointment = await Appointment.findByPk(req.params.id);
         if (!appointment) {
             return res.status(404).json({ msg: 'Appointment not found' });
